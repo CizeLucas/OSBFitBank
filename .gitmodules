@@ -1,0 +1,3 @@
+[submodule "minimal-api-work-with-databases"]
+	path = minimal-api-work-with-databases
+	url = https://github.com/MicrosoftDocs/minimal-api-work-with-databases.git
