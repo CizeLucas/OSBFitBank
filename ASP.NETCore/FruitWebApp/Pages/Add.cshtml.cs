@@ -24,7 +24,7 @@ namespace FruitWebApp.Pages
         // Begin POST operation code
         public async Task<IActionResult> OnPost() {
             // Serialize the information to be added to be sent in the HTTP Request
-            var jsonContent = new StringContent(JsonSerializer.Serialize(FruitModels), Encoding.UTF8);
+            var jsonContent = new StringContent(JsonSerializer.Serialize(FruitModels), Encoding.UTF8, "application/json");
 
             // Create the HTTP client using the FruitAPI named factory
             var httpClient = _httpClientFactory.CreateClient("FruitAPI");
@@ -42,7 +42,7 @@ namespace FruitWebApp.Pages
                 TempData["success"] = "Data was added successfully.";
                 return RedirectToPage("Index");
             } else {
-                TempData["faliure"] = "Data was added successfully.";
+                TempData["faliure"] = "Data was NOT added successfully.";
                 return RedirectToPage("Index");
             }
         }

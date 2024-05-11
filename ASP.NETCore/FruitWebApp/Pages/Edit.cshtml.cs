@@ -5,6 +5,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Components;
 using System.Text;
 using System.Diagnostics;
+using Microsoft.VisualBasic;
 
 namespace FruitWebApp.Pages
 {
@@ -40,7 +41,56 @@ namespace FruitWebApp.Pages
 		
 
 		// Begin PUT operation code
-        
+         public async Task<IActionResult> OnPost()
+     {
+         // Serialize the information to be edited in the database
+         var jsonContent = new StringContent(JsonSerializer.Serialize(FruitModels),
+             Encoding.UTF8,
+             "application/json");
+    
+         // Create the HTTP client using the FruitAPI named factory
+         var httpClient = _httpClientFactory.CreateClient("FruitAPI");
+    
+         // Execute the PUT request and store the response. The parameters in PutAsync 
+         // appends the item Id to the base address and passes the serialized data to the API
+         using HttpResponseMessage response = await httpClient.PutAsync(FruitModels.id.ToString(), jsonContent);
+    
+         // Return to the home (Index) page and add a temporary success/failure 
+         // message to the page.
+         if (response.IsSuccessStatusCode)
+         {
+             TempData["success"] = "Data was edited successfully.";
+             return RedirectToPage("Index");
+         }
+         else
+         {
+             TempData["failure"] = "Operation was not successful";
+             return RedirectToPage("Index");
+         }
+    
+     }
+
+        /*
+        public async Task<IActionResult> OnPost() {
+
+            // Serialize the information to be edited/updated in the database
+            var jsonContent = new StringContent(JsonSerializer.Serialize(FruitModels), Encoding.UTF8, "application/json");
+            
+            //Create the HTTP client using the FruitAPI Factory
+            var httpClient = _httpClientFactory.CreateClient("FruitAPI");
+
+            // Execute the PUT request and store the response. The parameters in PutAsync 
+            // appends the item Id to the base address and passes the serialized data to the API
+            using HttpResponseMessage response = await httpClient.PutAsync(($"{FruitModels.id.ToString()}"), jsonContent);
+
+            if(response.IsSuccessStatusCode)
+                TempData["success"] = "Data was edited successfully";
+            else
+                TempData["faliure"] = "Operation was not successful";
+                
+            return RedirectToPage("Index");
+        }
+        */
         // End PUT operation code
 
 	}
