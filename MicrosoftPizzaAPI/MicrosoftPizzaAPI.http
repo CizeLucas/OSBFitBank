@@ -1,0 +1,6 @@
+@PublicationsAPI_HostAddress = https://localhost:7211
+
+GET {{PublicationsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -12,6 +12,9 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
+    [BindProperty]
+        public string name { get; set; } = "ccllgg";
+
     public void OnGet()
     {
 
